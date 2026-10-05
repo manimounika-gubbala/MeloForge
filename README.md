@@ -6,7 +6,7 @@ MeloForge is a voice-controlled beat sketchpad. Describe a sound in plain words,
 
 > **Built entirely by voice.** This project was created for the Hacker House Goa **Wispr Flow Shortlisting Task**. Every line of code was produced by dictating prompts with [Wispr Flow](https://wisprflow.ai), not typed by hand. See the demo video below.
 
-**Demo video:** [PASTE LINK HERE]
+**Demo video:** https://youtu.be/j68aW6yFQP0?si=UqStcojP0ha3Aw4p
 
 ---
 
