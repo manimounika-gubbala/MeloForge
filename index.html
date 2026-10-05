@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#171917">
+  <meta name="description" content="A voice-controlled music studio powered by Web Audio.">
+  <title>MeloForge | Voice-powered music studio</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="MeloForge home">
+        <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+        <span>Melo<span class="brand-light">Forge</span></span>
+      </a>
+      <span class="tagline">Forge your sound with your voice.</span>
+      <div class="session-state"><span class="live-dot" aria-hidden="true"></span><span id="sessionLabel">SESSION READY</span></div>
+    </header>
+
+    <main id="top" class="studio">
+      <aside class="left-rail" aria-label="Session overview">
+        <div class="eyebrow">YOUR WORKSPACE</div>
+        <div class="project-title">
+          <span class="project-icon" aria-hidden="true">♫</span>
+          <div><h1>Late night<br>thoughts</h1><p>Untitled session</p></div>
+        </div>
+        <div class="rail-rule"></div>
+        <div class="eyebrow">SESSION DETAILS</div>
+        <div class="detail-row"><span>GENRE</span><strong id="genreLabel">Lo-fi</strong></div>
+        <div class="detail-row"><span>KEY</span><strong>F minor</strong></div>
+        <div class="detail-row"><span>TIME</span><strong id="timeSignature">4 / 4</strong></div>
+        <div class="rail-rule"></div>
+        <div class="eyebrow waveform-heading">OUTPUT</div>
+        <div class="waveform" aria-label="Decorative audio waveform" role="img">
+          <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <div class="waveform-caption"><span>MASTER OUT</span><span id="outputStatus">-18.0 dB</span></div>
+        <div class="rail-bottom"><span class="status-ring" aria-hidden="true"></span> ALL SYSTEMS READY</div>
+      </aside>
+
+      <section class="sequencer-panel" aria-labelledby="sequencerTitle">
+        <div class="section-topline">
+          <div><div class="eyebrow">PATTERN SEQUENCER <span class="session-number">/ 01</span></div><h2 id="sequencerTitle">Build your beat<span class="accent-period">.</span></h2></div>
+          <button class="text-button" id="clearButton" type="button" title="Clear all steps"><span aria-hidden="true">↺</span> Clear</button>
+        </div>
+
+        <div class="transport-bar">
+          <div class="transport-controls">
+            <button id="playButton" class="play-button" type="button" aria-label="Play"><span aria-hidden="true">▶</span></button>
+            <button id="stopButton" class="stop-button" type="button" aria-label="Stop" title="Stop"><span aria-hidden="true"></span></button>
+            <span class="transport-divider" aria-hidden="true"></span>
+            <div class="tempo-control"><span class="eyebrow">BPM</span><strong id="bpmValue" aria-live="polite">84</strong><div class="tempo-buttons"><button id="tempoDown" type="button" aria-label="Decrease tempo">−</button><button id="tempoUp" type="button" aria-label="Increase tempo">+</button></div></div>
+          </div>
+          <div class="bar-info"><span class="playing-indicator" aria-hidden="true"></span><span id="transportStatus">STOPPED</span><span class="bar-count">BAR 01</span></div>
+        </div>
+
+        <div class="sequencer-scroll">
+          <div class="sequencer-grid" id="sequencerGrid" aria-label="16-step music sequencer"></div>
+        </div>
+
+        <div class="add-track-row"><span class="track-count" id="trackCount">05 TRACKS</span><button id="addPianoButton" class="add-track-button" type="button"><span id="pianoButtonIcon" aria-hidden="true">+</span> <span id="pianoButtonLabel">Add Piano</span></button></div>
+        <div class="sequencer-footer"><span><kbd>SPACE</kbd> <span>play / stop</span></span><span>16 STEPS <span class="footer-separator">·</span> 1 BAR</span></div>
+      </section>
+
+      <aside class="voice-panel" aria-labelledby="voiceTitle">
+        <div class="eyebrow">BROWSER SPEECH RECOGNITION</div>
+        <h2 id="voiceTitle">Say the word<span class="accent-period">.</span></h2>
+        <p class="voice-intro">Your voice is the instrument. Tell MeloForge what to make.</p>
+        <button id="micButton" class="mic-button" type="button" aria-label="Start voice input">
+          <span class="mic-halo" aria-hidden="true"><span class="mic-core"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="9" y="3" width="6" height="12" rx="3" stroke="currentColor" stroke-width="1.7"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3m-3 0h6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span></span>
+          <span id="micLabel">TAP TO SPEAK</span>
+        </button>
+        <div class="listening-wave" id="listeningWave" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        <p class="mic-status" id="micStatus" aria-live="polite">Ready</p>
+        <form class="command-form" id="commandForm">
+          <label class="eyebrow" for="commandInput">TYPE OR DICTATE A COMMAND</label>
+          <div class="command-input-row"><input id="commandInput" name="command" type="text" autocomplete="off" placeholder="Try “add piano”" aria-label="Type or dictate a music command"><button type="submit" aria-label="Submit command" title="Submit command">↵</button></div>
+        </form>
+        <div class="transcription-box"><span class="eyebrow">INTERPRETED COMMAND</span><p id="transcriptionText" aria-live="polite" aria-atomic="true">Your command will appear here...</p></div>
+        <div class="voice-divider"></div>
+        <div class="eyebrow try-heading">TRY SAYING</div>
+        <ul class="command-list">
+          <li><span class="command-spark" aria-hidden="true">↗</span><span>"Create a slow lofi beat at <b>80 BPM</b>"</span></li>
+          <li><span class="command-spark" aria-hidden="true">↗</span><span>"Add piano"</span></li>
+          <li><span class="command-spark" aria-hidden="true">↗</span><span>"Remove piano"</span></li>
+          <li><span class="command-spark" aria-hidden="true">↗</span><span>"Make the drums faster"</span></li>
+        </ul>
+        <div class="privacy-note"><span aria-hidden="true">◉</span> SPEECH SERVICE MAY REQUIRE NETWORK</div>
+      </aside>
+    </main>
+    <footer class="app-footer"><span>MELOFORGE <span class="footer-separator">·</span> A LITTLE STUDIO IN YOUR BROWSER</span><span>MADE FOR THE IN-BETWEEN HOURS <span class="footer-separator">✳</span></span></footer>
+  </div>
+</body>
+</html>
